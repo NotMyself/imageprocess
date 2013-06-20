@@ -9,6 +9,7 @@ app.get(/d\/(.+)/, function(req, res) {
     var url = config.get('images') + req.params[0];
     request({ url: url })
         .on('response', function(image_stream) {
+            res.setHeader('Cache-Control', 'public, max-age=3600');
             transform(image_stream, req.query)
             .pipe(res);
         });
