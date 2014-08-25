@@ -5,6 +5,12 @@ var express = require('express'),
     app     = express(),
     server;
 
+app.get('/mu-79d650c0-34ab024a-0c011143-8d223b6f', function( req, res ){
+
+        res.send('42');
+
+});
+
 app.get(/d\/(.+)/, function(req, res) {
     var url = config.get('images') + req.params[0];
     request({ url: url })
