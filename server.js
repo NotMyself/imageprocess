@@ -9,7 +9,7 @@ var toobusy = require('toobusy-js'),
 // middleware which blocks requests when we're too busy
 app.use(function(req, res, next) {
   if (toobusy()) {
-    res.send(503, "I'm busy right now, sorry.");
+    res.send(503, "I'm busy right now, cheers.");
   } else {
     next();
   }
