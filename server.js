@@ -1,9 +1,19 @@
-var express = require('express'),
+var toobusy = require('toobusy-js'),
+    express = require('express'),
     request = require('request'),
     transform = require('./lib/image-transformer'),
     config  = require('./config'),
     app     = express(),
     server;
+
+// middleware which blocks requests when we're too busy
+app.use(function(req, res, next) {
+  if (toobusy()) {
+    res.send(503, "I'm busy right now, sorry.");
+  } else {
+    next();
+  }
+});
 
 app.get(/d\/(.+)/, function(req, res) {
     var url = config.get('images') + req.params[0];
