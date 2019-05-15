@@ -27,7 +27,7 @@ app.get(/d\/(.+)/, function(req, res) {
     )
     .on('response', function(image_stream) {
         transform(image_stream, req.query)
-        .pipe(res);
+        .pipe(res.set('Cache-Control', 'public, s-maxage=604800'));
     });
 });
 
