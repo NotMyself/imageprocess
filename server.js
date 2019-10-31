@@ -31,6 +31,22 @@ app.get(/d\/(.+)/, function(req, res) {
     });
 });
 
+app.get(/m\/(.+)/, function(req, res) {
+    var url = config.get('mw_images') + req.params[0];
+    request(
+        { uri: url }
+        , function (error, response, body) {
+            if(response.statusCode !== 200) {
+                res.status(response.statusCode).send('not-found');
+            }
+        }
+    )
+    .on('response', function(image_stream) {
+        transform(image_stream, req.query)
+        .pipe(res.set('Cache-Control', 'public, s-maxage=31556952'));
+    });
+});
+
 app.listen(config.get('port'), function(){
     console.log('server started on port ' + config.get('port'));
 });
