@@ -32,12 +32,13 @@ app.get(/d\/(.+)/, function(req, res) {
 });
 
 app.get(/m\/(.+)/, function(req, res) {
-    var url = config.get('mw_images') + req.params[0];
+    var path = encodeURI(req.params[0]);
+    var url = config.get('mw_images') + path;
     request(
         { uri: url }
         , function (error, response, body) {
             if(response.statusCode !== 200) {
-                res.status(response.statusCode).send('not-found');
+                res.status(response.statusCode).send('file-not-found');
             }
         }
     )
